@@ -1,0 +1,11 @@
+{
+  "private": true,
+  "type": "module",
+  "name": "template-compiler",
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  }
+}
