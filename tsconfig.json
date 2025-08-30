@@ -20,7 +20,7 @@
     "noUnusedLocals": false,
     "noUnusedParameters": false,
     "paths": {
-      // ...
+      "*": [ "./*", "dependencies/*", "*" ]
     },
     "skipLibCheck": false,
     "strict": true,
