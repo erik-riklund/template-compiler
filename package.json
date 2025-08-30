@@ -3,9 +3,13 @@
   "type": "module",
   "name": "template-compiler",
   "devDependencies": {
-    "@types/bun": "latest"
+    "@types/bun": "latest",
+    "glob": "^11.0.3"
   },
   "peerDependencies": {
     "typescript": "^5"
+  },
+  "scripts": {
+    "build": "bun build index.ts --target node --external glob --outdir dist"
   }
 }
