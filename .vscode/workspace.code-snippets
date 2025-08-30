@@ -2,7 +2,7 @@
   "comment":
   {
     "prefix": "comment",
-    "body":"//\n// ?\n//"
+    "body": "//\n// ?\n//"
   },
   "copyright":
   {
@@ -11,7 +11,43 @@
       "//",
       "// Copyright 2025 Erik Riklund (Gopher)",
       "// <https://github.com/erik-riklund>",
-      "//"
+      "//",
+    ]
+  },
+  "document":
+  {
+    "prefix": "document",
+    "body": [
+      "//",
+      "// Copyright 2025 Erik Riklund (Gopher)",
+      "// <https://github.com/erik-riklund>",
+      "//\n",
+      "// [imports]\n",
+      "// ---\n\n"
+    ]
+  },
+  "tests":
+  {
+    "prefix": "tests",
+    "body": [
+      "//",
+      "// Copyright 2025 Erik Riklund (Gopher)",
+      "// <https://github.com/erik-riklund>",
+      "//\n",
+      "import { it, expect } from 'bun:test'\n",
+      "// ---"
+    ]
+  },
+  "test-case":
+  {
+    "prefix":"test-case",
+    "body": [
+      "it('should ${1}',\n",
+      "  () =>",
+      "  {",
+      "    // ...",
+      "  }",
+      ");"
     ]
   }
 }
