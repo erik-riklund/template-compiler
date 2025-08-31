@@ -2,9 +2,9 @@
   "type": "module",
   "license": "MIT",
   "version": "1.0.0",
-  "name": "template-platform",
+  "name": "template-pipeline",
   "description": "...",
-  "keywords": [ "template", "templates", "platform" ],
+  "keywords": [ "template", "templates", "pipeline" ],
   "homepage": "https://github.com/erik-riklund/template-platform",
   "exports": { ".": "./index.js", "./handlers": "./handlers/index.js" }
 }
