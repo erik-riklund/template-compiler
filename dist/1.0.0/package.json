@@ -1,0 +1,10 @@
+{
+  "type": "module",
+  "license": "MIT",
+  "version": "1.0.0",
+  "name": "template-platform",
+  "description": "...",
+  "keywords": [ "template", "templates", "platform" ],
+  "homepage": "https://github.com/erik-riklund/template-platform",
+  "exports": { ".": "./index.js", "./handlers": "./handlers/index.js" }
+}
