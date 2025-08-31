@@ -1,4 +1,4 @@
-# ?
+## Unnamed template pipeline
 
 _Probably the cleanest templates in the world._
 
@@ -7,9 +7,9 @@ _Probably the cleanest templates in the world._
 This tool was built on a single, guiding principle:  
 _There should be no business logic or expressions in templates, only structure._
 
-It's a minimal system designed for transforming structured text into executable rendering logic—designed for control, clarity, and customization. 
+It's a minimal system designed for transforming structured text into executable rendering logic.
 
-Instead of enforcing a single way to write templates, it allows you to define how blocks, variables, and comments are recognized, so the tool adapts to your project—not the other way around. 
+---
 
 > - **A simple example using the default syntax in a HTML template:**
 >
@@ -29,3 +29,4 @@ Instead of enforcing a single way to write templates, it allows you to define ho
 
 ---
 
+...
