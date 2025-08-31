@@ -4,20 +4,6 @@ _Probably the cleanest templates in the world._
 
 ---
 
-### Table of contents
-
-- [Introduction](#introduction)
-- [Getting started](#getting-started)
-  - [Installation](#installation)
-  - [Using the transformation module](#using-the-transformation-module)
-- [System architecture](#system-architecture)
-  - [Parsing and transformation](#parsing-and-transformation)
-  - [Rendering model](#rendering-model)
-
----
-
-## Introduction
-
 This tool was built on a single, guiding principle:  
 _There should be no business logic or expressions in templates, only structure._
 
@@ -25,7 +11,7 @@ It's a minimal system designed for transforming structured text into executable 
 
 Instead of enforcing a single way to write templates, it allows you to define how blocks, variables, and comments are recognized, so the tool adapts to your project—not the other way around. 
 
-> - **A simple example using HTML:**
+> - **A simple example using the default syntax in a HTML template:**
 >
 >   ```html
 >   <html>
@@ -43,24 +29,3 @@ Instead of enforcing a single way to write templates, it allows you to define ho
 
 ---
 
-## Getting started
-
-### Installation
-
-...
-
-### Using the transformation module
-
-...
-
----
-
-## System architecture
-
-### Parsing and transformation
-
-...
-
-### Rendering model
-
-...
