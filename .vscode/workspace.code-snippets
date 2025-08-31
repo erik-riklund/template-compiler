@@ -43,7 +43,7 @@
     "prefix":"test-case",
     "body": [
       "it('should ${1}',\n",
-      "  () =>",
+      "  async () =>",
       "  {",
       "    // ...",
       "  }",
