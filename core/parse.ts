@@ -102,7 +102,7 @@ const parseLine = (chunks: Array<Chunk>, line: string,
     {
       // we've reached the end of the line.
 
-      chunks.push({ type: 'text', content: buffer });
+      chunks.push({ type: 'text', content: buffer + '\\n' });
     }
   }
 }

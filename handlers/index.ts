@@ -4,11 +4,16 @@
 //
 
 import type { Handler } from 'types'
-import { handler as variables } from './variables'
+
+import { handler as eachBlock } from './blocks/each'
+import { handler as withBlock } from './blocks/with'
+import { handler as whenBlock } from './blocks/when'
+import { handler as blockEnd } from './block-end'
+import { handler as variable } from './variables'
 
 // ---
 
 export const getHandlers = (): Array<Handler> =>
 {
-  return [variables];
+  return [eachBlock, withBlock, whenBlock, blockEnd, variable];
 }

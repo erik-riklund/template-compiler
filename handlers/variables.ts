@@ -8,6 +8,16 @@ import { formatString } from 'format-string'
 
 // ---
 
+export const getVariablePaths = (path: string) =>
+{
+  const safePath = path.replace(/\./g, '?.');
+  const topLevelVariable = path.split('.')[0];
+
+  return { safePath, topLevelVariable };
+}
+
+// ---
+
 export const handler: Handler =
 {
   test: (chunk) => chunk.type === 'variable',
@@ -23,12 +33,11 @@ export const handler: Handler =
         (_, variable: string, encoded: string) =>
         {
           const sanitize = encoded !== '!';
-          const safeVariable = variable.replace(/\./g, '?.');
-          const topLevelVariable = variable.split('.')[0];
+          const { safePath, topLevelVariable } = getVariablePaths(variable);
 
           const output = formatString(
             "typeof %1 !== 'undefined' ? %2 : data.%2 ?? 'undefined'",
-            [topLevelVariable, safeVariable]
+            [topLevelVariable, safePath]
           );
 
           return `output.push(${sanitize ? `sanitize(${output})` : output});`;

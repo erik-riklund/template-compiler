@@ -10,17 +10,22 @@ import type { Stage } from 'composable-pipeline/types'
 // ?
 //
 const template = `const output = [];
-const { data, dependencies, sanitize } = {
+const { data, dependencies, sanitize } =
+{
   data: {},
   dependencies: {},
-  sanitize: (input) => input.replace(/</g, '&lt;').replace(/>/g, '&gt;'),
+  
+  sanitize: (input) => {
+    return typeof input !== 'string' ? input
+      : input.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  },
   
   ...context
 }
 
 %1
 
-return output.join('');`;
+return output.join('').trim();`;
 
 //
 // Assembles the transformed chunks into a render function.
