@@ -17,7 +17,7 @@ it('should transform a `each` block with a variable',
     const result = await handler.transform(0, chunk);
 
     expect(result).toEqual([0,
-      "for (const user of typeof users !== 'undefined' ? users : data.users) {"
+      "for (const user of (typeof users !== 'undefined' ? users : data.users)) {"
     ]);
   }
 );
@@ -32,7 +32,7 @@ it('should transform a `each` block with a nested variable',
     const result = await handler.transform(0, chunk);
 
     expect(result).toEqual([0,
-      "for (const job of typeof user !== 'undefined' ? user?.jobs : data.user?.jobs) {"
+      "for (const job of (typeof user !== 'undefined' ? user?.jobs : data.user?.jobs)) {"
     ]);
   }
 );
@@ -47,7 +47,7 @@ it('should transform a destructured `each` block with a variable',
     const result = await handler.transform(0, chunk);
 
     expect(result).toEqual([0,
-      "for (const { name, age } of typeof users !== 'undefined' ? users : data.users) {"
+      "for (const { name, age } of (typeof users !== 'undefined' ? users : data.users)) {"
     ]);
   }
 );
@@ -62,7 +62,7 @@ it('should transform a destructured `each` block with a nested variable',
     const result = await handler.transform(0, chunk);
 
     expect(result).toEqual([0,
-      "for (const { company, started } of typeof user !== 'undefined' ? user?.jobs : data.user?.jobs) {"
+      "for (const { company, started } of (typeof user !== 'undefined' ? user?.jobs : data.user?.jobs)) {"
     ]);
   }
 );

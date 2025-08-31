@@ -29,7 +29,7 @@ export const handler: Handler =
           const { safePath, topLevelVariable } = getVariablePaths(source);
 
           return formatString(
-            "for (const %1 of typeof %2 !== 'undefined' ? %3 : data.%3) {",
+            "for (const %1 of (typeof %2 !== 'undefined' ? %3 : data.%3)) {",
             [variable.includes(',') ? `{ ${variable} }` : variable, topLevelVariable, safePath]
           );
         }
