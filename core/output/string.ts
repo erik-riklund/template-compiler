@@ -8,5 +8,9 @@ import type { Stage } from 'composable-pipeline/types'
 //
 // Creates a stringified render function.
 //
-export const outputToString: Stage<string, string>
-  = async (body) => `(context) => {\n${body}\n}`;
+export const outputToString: Stage<string, string> = async (body) =>
+{
+  // todo: add formatting to produce human-readable output.
+
+  return `(context) => {\n${body}\n}`;
+}

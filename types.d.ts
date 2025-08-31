@@ -7,13 +7,30 @@
 // ?
 //
 export type Chunk = {
-  type: 'text' | 'variable' | 'directive', content: string
+  type: 'text' | 'variable' | 'block', content: string
+}
+
+//
+// ?
+//
+type Context = Partial<{ data: Record<string, unknown> }>;
+
+//
+// ?
+//
+export type ParserInput = {
+  template: string, rules?: Partial<ParseRules>
 }
 
 //
 // ?
 //
 export type TransformedChunk = [number, string];
+
+//
+// ?
+//
+export type Renderer = (context?: Context) => string;
 
 //
 // ?
@@ -27,9 +44,12 @@ export interface Handler
 //
 // ?
 //
-type Context = {};
+export interface ParseRules
+{
+  block: (line: string) => boolean,
+  blockEnd: (line: string) => boolean,
+  comment: (line: string) => boolean,
 
-//
-// ?
-//
-export type Renderer = (context: Context) => string;
+  variable: (buffer: string, current: string, next: Nullable<string>) => boolean,
+  variableEnd: (buffer: string, current: string, next: Nullable<string>) => boolean
+}

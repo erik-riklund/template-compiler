@@ -3,13 +3,14 @@
 // <https://github.com/erik-riklund>
 //
 
+import { loadHandlers } from 'core/handlers'
 import type { Stage } from 'composable-pipeline/types'
 import type { Handler, Chunk, TransformedChunk } from 'types'
 
 //
 // ?
 //
-const handlers: Array<Handler> = [];
+const handlers: Array<Handler> = await loadHandlers();
 
 //
 // ?

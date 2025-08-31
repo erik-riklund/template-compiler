@@ -6,7 +6,7 @@
 import type { Stage } from 'composable-pipeline/types'
 
 //
-// ?
+// Assembles the transformed chunks into a render function.
 //
 export const assemble: Stage<Array<string>, string> = async (input) =>
 {
@@ -14,6 +14,7 @@ export const assemble: Stage<Array<string>, string> = async (input) =>
 
   return (
     "const output = [];\n" +
+    "const { data, dependencies } = { data: {}, dependencies: {}, ...context };\n"+
     "const sanitize = (input) => input.replace(/</g, '&lt;').replace(/>/g, '&gt;');\n\n" +
     body + "\n\nreturn output.join('');"
   );

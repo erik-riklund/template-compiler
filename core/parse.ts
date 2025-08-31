@@ -3,63 +3,36 @@
 // <https://github.com/erik-riklund>
 //
 
-import type { Chunk } from 'template-compiler/types'
 import type { Stage } from 'composable-pipeline/types'
+import type { Chunk, ParserInput, ParseRules } from 'types'
 
 //
 // ?
 //
-export const parse: Stage<string, Array<Chunk>> = async (input) =>
+export const parse: Stage<ParserInput, Array<Chunk>> = async ({ template, rules }) =>
 {
   const chunks: Array<Chunk> = [];
-  const lines = input.replace(/`/g, '\\`').split(/\r?\n/);
+
+  const lines = template.replace(/`/g, '\\`').split(/\r?\n/);
+  const { block, blockEnd, comment, variable, variableEnd } = applyDefaultRules(rules ?? {});
 
   for (const line of lines)
   {
     const trimmedLine = line.trim();
 
-    const isComment = trimmedLine.startsWith('//');
-    const isOpeningTag = trimmedLine.startsWith('#') && trimmedLine.endsWith(':');
-    const isClosingTag = trimmedLine === 'end';
-
-    if (isOpeningTag || isClosingTag)
+    if (comment(trimmedLine))
     {
-      const directive = isOpeningTag ? trimmedLine.slice(1, -1) : trimmedLine;
-
-      chunks.push({ type: 'directive', content: directive });
+      continue; // move to the next line.
     }
-    else if (!isComment)
+
+    if (block(trimmedLine) || blockEnd(trimmedLine))
     {
-      let buffer = '';
+      chunks.push({ type: 'block', content: trimmedLine });
 
-      for (let i = 0; i < line.length; i++)
-      {
-        const current = line[i];
-        const next = i < line.length - 1 ? line[i + 1] : null;
-
-        if (current === '{' && next === '$')
-        {
-          chunks.push({ type: 'text', content: buffer });
-
-          buffer = ''; // reset buffer to start collecting the variable name.
-        }
-
-        buffer += current;
-
-        if (buffer.startsWith('{$') && current === '}')
-        {
-          chunks.push({ type: 'variable', content: buffer });
-
-          buffer = ''; // reset buffer to collect text after the variable.
-        }
-
-        if (i === line.length - 1)
-        {
-          // we've reached the end of the line.
-          chunks.push({ type: 'text', content: buffer });
-        }
-      }
+      continue; // move to the next line.
     }
+
+    parseLine(chunks, line, { variable, variableEnd });
   }
 
   return chunks;
@@ -68,7 +41,66 @@ export const parse: Stage<string, Array<Chunk>> = async (input) =>
 //
 // ?
 //
-const parseLine = async () =>
+const applyDefaultRules = (rules: Partial<ParseRules>) =>
 {
-  // ...
+  const defaultRules: ParseRules =
+  {
+    block: (line: string) => 
+    {
+      return line.startsWith('#') && line.endsWith(':');
+    },
+
+    blockEnd: (line: string) => line === 'end',
+    comment: (line: string) => line.startsWith('//'),
+
+    variable: (_buffer: string, current: string, next: Nullable<string>) =>
+    {
+      return current === '{' && next === '$';
+    },
+
+    variableEnd: (buffer: string, current: string) =>
+    {
+      return buffer.startsWith('{$') && current === '}';
+    }
+  }
+
+  return { ...defaultRules, ...rules };
+}
+
+//
+// ?
+//
+const parseLine = (chunks: Array<Chunk>, line: string,
+  { variable, variableEnd }: Pick<ParseRules, 'variable' | 'variableEnd'>) =>
+{
+  let buffer = '';
+
+  for (let i = 0; i < line.length; i++)
+  {
+    const current = line[i];
+    const next = i < line.length - 1 ? line[i + 1] : null;
+
+    if (variable(buffer, current, next))
+    {
+      chunks.push({ type: 'text', content: buffer });
+
+      buffer = ''; // reset buffer to start collecting the variable name.
+    }
+
+    buffer += current;
+
+    if (variableEnd(buffer, current, next))
+    {
+      chunks.push({ type: 'variable', content: buffer });
+
+      buffer = ''; // reset buffer to collect text after the variable.
+    }
+
+    if (i === line.length - 1)
+    {
+      // we've reached the end of the line.
+
+      chunks.push({ type: 'text', content: buffer });
+    }
+  }
 }
