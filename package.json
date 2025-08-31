@@ -1,15 +1,14 @@
 {
   "private": true,
   "type": "module",
-  "name": "template-compiler",
   "devDependencies": {
-    "@types/bun": "latest",
-    "glob": "^11.0.3"
+    "@types/bun": "latest"
   },
   "peerDependencies": {
     "typescript": "^5"
   },
   "scripts": {
-    "build": "bun build index.ts --target node --external glob --outdir dist"
+    "core": "bun build index.ts --target node --outdir dist",
+    "handlers": "bun build handlers/index.ts --target node --outdir dist"
   }
 }

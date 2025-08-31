@@ -10,7 +10,7 @@ import type { Stage } from 'composable-pipeline/types'
 //
 export const outputToString: Stage<string, string> = async (body) =>
 {
-  // todo: add formatting to produce human-readable output.
+  // todo: add indentation to produce human-readable output.
 
-  return `(context) => {\n${body}\n}`;
+  return `(context) => {\n  ${body}\n}`;
 }

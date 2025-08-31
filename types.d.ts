@@ -7,20 +7,29 @@
 // ?
 //
 export type Chunk = {
-  type: 'text' | 'variable' | 'block', content: string
+  content: string, type: 'text' | 'variable' | 'block'
 }
 
 //
 // ?
 //
-type Context = Partial<{ data: Record<string, unknown> }>;
+export type PipelineInput = {
+  template: string, handlers: Array<Handler>, rules?: Partial<ParseRules>
+}
 
 //
 // ?
 //
-export type ParserInput = {
-  template: string, rules?: Partial<ParseRules>
-}
+type RenderingContext = Partial<{
+  data: Record<string, unknown>, sanitize: (input: string) => string
+}>;
+
+//
+// ?
+//
+export type TransformationStageInput = {
+  chunks: Array<Chunk>, handlers: Array<Handler>
+};
 
 //
 // ?
@@ -30,7 +39,7 @@ export type TransformedChunk = [number, string];
 //
 // ?
 //
-export type Renderer = (context?: Context) => string;
+export type Renderer = (context?: RenderingContext) => string;
 
 //
 // ?

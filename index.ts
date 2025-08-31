@@ -5,7 +5,7 @@
 // @version 1.0.0
 //
 
-import type { ParserInput, Renderer } from 'types'
+import type { PipelineInput, Renderer } from 'types'
 import { createPipeline } from 'composable-pipeline'
 
 //
@@ -25,10 +25,10 @@ import { outputToFunction } from 'core/output/function'
 //
 export const transformTemplate =
 {
-  toString: createPipeline<ParserInput, string>(
+  toString: createPipeline<PipelineInput, string>(
     [parse, transform, assemble, outputToString]
   ),
-  toFunction: createPipeline<ParserInput, Renderer>(
+  toFunction: createPipeline<PipelineInput, Renderer>(
     [parse, transform, assemble, outputToFunction]
   )
 }

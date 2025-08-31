@@ -4,39 +4,41 @@
 //
 
 import type { Stage } from 'composable-pipeline/types'
-import type { Chunk, ParserInput, ParseRules } from 'types'
+import type { Chunk, PipelineInput, ParseRules, TransformationStageInput } from 'types'
 
 //
 // ?
 //
-export const parse: Stage<ParserInput, Array<Chunk>> = async ({ template, rules }) =>
-{
-  const chunks: Array<Chunk> = [];
-
-  const lines = template.replace(/`/g, '\\`').split(/\r?\n/);
-  const { block, blockEnd, comment, variable, variableEnd } = applyDefaultRules(rules ?? {});
-
-  for (const line of lines)
+export const parse: Stage<
+  PipelineInput, TransformationStageInput
+> = async ({ template, handlers, rules }) =>
   {
-    const trimmedLine = line.trim();
+    const chunks: Array<Chunk> = [];
 
-    if (comment(trimmedLine))
+    const lines = template.replace(/`/g, '\\`').split(/\r?\n/);
+    const { block, blockEnd, comment, variable, variableEnd } = applyDefaultRules(rules ?? {});
+
+    for (const line of lines)
     {
-      continue; // move to the next line.
+      const trimmedLine = line.trim();
+
+      if (comment(trimmedLine))
+      {
+        continue; // move to the next line.
+      }
+
+      if (block(trimmedLine) || blockEnd(trimmedLine))
+      {
+        chunks.push({ type: 'block', content: trimmedLine });
+
+        continue; // move to the next line.
+      }
+
+      parseLine(chunks, line, { variable, variableEnd });
     }
 
-    if (block(trimmedLine) || blockEnd(trimmedLine))
-    {
-      chunks.push({ type: 'block', content: trimmedLine });
-
-      continue; // move to the next line.
-    }
-
-    parseLine(chunks, line, { variable, variableEnd });
+    return { chunks, handlers };
   }
-
-  return chunks;
-}
 
 //
 // ?

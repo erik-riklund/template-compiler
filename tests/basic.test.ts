@@ -4,7 +4,7 @@
 //
 
 import { it, expect } from 'bun:test'
-import { transformTemplate } from '..';
+import { transformTemplate } from '..'
 
 // ---
 
