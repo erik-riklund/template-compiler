@@ -20,9 +20,12 @@ export type PipelineInput = {
 //
 // ?
 //
-type RenderingContext = Partial<{
-  data: Record<string, unknown>, sanitize: (input: string) => string
-}>;
+type RenderingContext = Partial<
+  {
+    data: Record<string, unknown>,
+    sanitize: (input: string) => string
+  }
+>;
 
 //
 // ?
@@ -57,6 +60,7 @@ export interface ParseRules
 {
   block: (line: string) => boolean,
   blockEnd: (line: string) => boolean,
+  elseBlock: (line: string) => boolean,
   comment: (line: string) => boolean,
 
   variable: (buffer: string, current: string, next: Nullable<string>) => boolean,

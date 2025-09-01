@@ -16,7 +16,7 @@ export const parse: Stage<
     const chunks: Array<Chunk> = [];
 
     const lines = template.replace(/`/g, '\\`').split(/\r?\n/);
-    const { block, blockEnd, comment, variable, variableEnd } = applyDefaultRules(rules ?? {});
+    const { block, blockEnd, elseBlock, comment, variable, variableEnd } = applyDefaultRules(rules ?? {});
 
     for (const line of lines)
     {
@@ -27,7 +27,7 @@ export const parse: Stage<
         continue; // move to the next line.
       }
 
-      if (block(trimmedLine) || blockEnd(trimmedLine))
+      if (block(trimmedLine) || blockEnd(trimmedLine) || elseBlock(trimmedLine))
       {
         chunks.push({ type: 'block', content: trimmedLine });
 
@@ -53,6 +53,7 @@ const applyDefaultRules = (rules: Partial<ParseRules>) =>
     },
 
     blockEnd: (line: string) => line === 'end',
+    elseBlock: (line: string) => line === 'else:',
     comment: (line: string) => line.startsWith('//'),
 
     variable: (_buffer: string, current: string, next: Nullable<string>) =>

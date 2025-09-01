@@ -33,7 +33,8 @@ export const handler: Handler =
           );
 
           return formatString(
-            "if (%1 === %2) {", [value, (modifier === 'not' ? 'false' : 'true')]
+            "if (typeof %1 !== 'boolean') {\nthrow new Error(`'%2' is not a boolean value`);\n}\nif (%1 === %3) {",
+            [value, safePath, (modifier === 'not' ? 'false' : 'true')]
           );
         }
       )

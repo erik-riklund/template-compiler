@@ -11,7 +11,7 @@ import type { Stage } from 'composable-pipeline/types'
 //
 export const outputToFunction: Stage<string, Renderer> = async (body) =>
 {
-  // console.debug(body);
+  console.debug(body);
 
   return new Function('context', body) as Renderer;
 }

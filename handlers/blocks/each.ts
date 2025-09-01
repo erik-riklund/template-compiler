@@ -28,9 +28,13 @@ export const handler: Handler =
         {
           const { safePath, topLevelVariable } = getVariablePaths(source);
 
+          const value = formatString(
+            "typeof %1 !== 'undefined' ? %2 : data.%2", [topLevelVariable, safePath]
+          );
+
           return formatString(
-            "for (const %1 of (typeof %2 !== 'undefined' ? %3 : data.%3)) {",
-            [variable.includes(',') ? `{ ${variable} }` : variable, topLevelVariable, safePath]
+            "if (!Array.isArray(%2)) {\nthrow new Error(`'%3' is not an array`);\n}\nfor (const %1 of (%2)) {",
+            [(variable.includes(',') ? `{ ${variable} }` : variable), value, source]
           );
         }
       )

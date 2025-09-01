@@ -5,15 +5,27 @@
 
 import type { Handler } from 'types'
 
+import { handler as blockEnd } from './blocks/end'
+import { handler as elseBlock } from './blocks/else'
 import { handler as eachBlock } from './blocks/each'
+import { handler as includeBlock } from './blocks/include'
+import { handler as renderBlock } from './blocks/render'
 import { handler as withBlock } from './blocks/with'
 import { handler as whenBlock } from './blocks/when'
-import { handler as blockEnd } from './block-end'
 import { handler as variable } from './variables'
 
 // ---
 
 export const getHandlers = (): Array<Handler> =>
 {
-  return [eachBlock, withBlock, whenBlock, blockEnd, variable];
+  return [
+    blockEnd,
+    elseBlock,
+    eachBlock,
+    includeBlock,
+    renderBlock,
+    withBlock,
+    whenBlock,
+    variable
+  ];
 }

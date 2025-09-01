@@ -35,8 +35,8 @@ export const handler: Handler =
           );
 
           return formatString(
-            "if (Array.isArray(%1)\n && (%1).length %2 0) {",
-            [value, (block === 'with' ? '>' : '===')]
+            "if (!Array.isArray(%1)) {\nthrow new Error(`'%3' is not an array`);\n}\nif ((%1).length %2 0) {",
+            [value, (block === 'with' ? '>' : '==='), safePath]
           );
         }
       )
