@@ -33,8 +33,8 @@ export const handler: Handler =
           );
 
           return formatString(
-            "if (!Array.isArray(%2)) {\nthrow new Error(`'%3' is not an array`);\n}\nfor (const %1 of (%2)) {",
-            [(variable.includes(',') ? `{ ${variable} }` : variable), value, source]
+            "if (!Array.isArray(%2)) {\nthrow new Error(`'%3' is not an array (line %4)`);\n}\nfor (const %1 of (%2)) {",
+            [(variable.includes(',') ? `{ ${variable} }` : variable), value, source, String(index + 1)]
           );
         }
       )
