@@ -49,7 +49,9 @@ const applyDefaultRules = (rules: Partial<ParseRules>) =>
   {
     block: (line: string) => 
     {
-      return line.startsWith('#') && line.endsWith(':');
+      return line.startsWith('#') && (
+        line.endsWith(':') || line.endsWith(';')
+      );
     },
 
     blockEnd: (line: string) => line === 'end',

@@ -22,13 +22,13 @@ export const handler: Handler =
       index,
 
       content.replace(
-        /^#include:$/,
+        /^#include\s+(\w+);$/,
 
-        (_) =>
+        (_, identifier: string) =>
         {
-          // ...
-
-          return '';
+          return formatString(
+            "output.push(include_%1({ data, sanitize }));", [identifier]
+          );
         }
       )
     ]

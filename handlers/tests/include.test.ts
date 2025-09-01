@@ -3,23 +3,19 @@
 // <https://github.com/erik-riklund>
 //
 
-import type { Chunk, Renderer } from 'types'
+import type { Chunk } from 'types'
 import { it, expect } from 'bun:test'
 import { handler } from 'handlers/blocks/include'
 
 // ---
 
-const dummy: Renderer = () =>
-{
-  return '';
-}
-
-// ---
-
-it('should render an `include` block',
+it('should transform an `include` block',
 
   async () =>
   {
-    // ...
+    const chunk: Chunk = { type: 'block', content: '#include foo;' };
+    const [, result] = await handler.transform(0, chunk);
+
+    expect(result).toBe('output.push(include_foo({ data, sanitize }));');
   }
 );
