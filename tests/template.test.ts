@@ -9,11 +9,12 @@ import { getHandlers } from 'handlers'
 
 // ---
 
-export const template = `
+const template = `
 <html>
   <head>
     <title>{$title}</title>
   </head>
+  
   <body>
     <h1>{$user.name}</h1>
     <p>{$user.profile!}</p>
@@ -26,6 +27,10 @@ export const template = `
     </ul>
     else:
     <p>No jobs</p>
+    end
+
+    #when $user.isAdmin:
+    <p><a href="/admin">Administration panel</a></p>
     end
   </body>
 </html>`;
@@ -51,7 +56,9 @@ it('should render a template with every possible block type',
         jobs: [
           { company: 'Alpha', started: '2020' },
           { company: 'Beta', started: '2021' }
-        ]
+        ],
+
+        isAdmin: false
       }
     };
 
@@ -62,5 +69,6 @@ it('should render a template with every possible block type',
     expect(result).toInclude('<p>My nickname is <b>Bar</b>!</p>');
     expect(result).toInclude('<li>Alpha (2020)</li>');
     expect(result).toInclude('<li>Beta (2021)</li>');
+    expect(result).not.toInclude('Administration panel');
   }
 );

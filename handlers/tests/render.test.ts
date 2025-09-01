@@ -8,3 +8,11 @@ import { it, expect } from 'bun:test'
 import { handler } from 'handlers/blocks/render'
 
 // ---
+
+it.todo('should transform a `render` block',
+
+  async () =>
+  {
+    // ...
+  }
+);
