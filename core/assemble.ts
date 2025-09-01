@@ -10,10 +10,9 @@ import type { Stage } from 'composable-pipeline/types'
 // ?
 //
 const template = `const output = [];
-const { data, dependencies, sanitize } =
+const { data, sanitize } =
 {
   data: {},
-  dependencies: {},
   
   sanitize: (input) => {
     return typeof input !== 'string' ? input
