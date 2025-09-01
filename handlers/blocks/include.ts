@@ -27,7 +27,7 @@ export const handler: Handler =
         (_, identifier: string) =>
         {
           return formatString(
-            "output.push(include_%1({ data, sanitize }));", [identifier]
+            "output.push(include('%1', { data, sanitize }));", [identifier]
           );
         }
       )

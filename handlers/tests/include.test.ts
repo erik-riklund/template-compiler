@@ -16,6 +16,6 @@ it('should transform an `include` block',
     const chunk: Chunk = { type: 'block', content: '#include foo;' };
     const [, result] = await handler.transform(0, chunk);
 
-    expect(result).toBe('output.push(include_foo({ data, sanitize }));');
+    expect(result).toBe("output.push(include('foo', { data, sanitize }));");
   }
 );
