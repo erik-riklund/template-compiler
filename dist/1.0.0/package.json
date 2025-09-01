@@ -1,10 +1,10 @@
 {
   "type": "module",
   "license": "MIT",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "name": "@zenplate/compiler",
   "description": "...",
-  "keywords": [ "zen", "zenplate", "template", "compiler" ],
+  "keywords": [ "zenplate", "template", "compiler" ],
   "homepage": "https://github.com/erik-riklund/template-platform",
   "exports": { ".": "./index.js", "./handlers": "./handlers/index.js" }
 }
