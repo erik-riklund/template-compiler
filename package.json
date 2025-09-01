@@ -8,7 +8,7 @@
     "typescript": "^5"
   },
   "scripts": {
-    "core": "bun build index.ts --target node --outdir dist",
-    "handlers": "bun build handlers/index.ts --target node --outdir dist"
+    "build/core": "bun build index.ts --target node --outdir dist",
+    "build/handlers": "bun build handlers/index.ts --target node --outdir dist"
   }
 }
