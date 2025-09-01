@@ -3,6 +3,8 @@
 // <https://github.com/erik-riklund>
 //
 
+import { getHandlers } from 'handlers'
+
 import type { Stage } from 'composable-pipeline/types'
 import type { Handler, TransformedChunk, TransformationStageInput } from 'types'
 
@@ -15,6 +17,8 @@ export const transform: Stage<
   {
     const result: Array<string> = [];
     const processedChunks: Array<Promise<TransformedChunk>> = [];
+
+    handlers ??= getHandlers();
 
     for (let index = 0; index < chunks.length; index++)
     {

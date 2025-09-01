@@ -14,7 +14,7 @@ export type Chunk = {
 // ?
 //
 export type PipelineInput = {
-  template: string, handlers: Array<Handler>, rules?: Partial<ParseRules>
+  template: string, handlers?: Array<Handler>, rules?: Partial<ParseRules>
 }
 
 //
@@ -31,7 +31,7 @@ type RenderingContext = Partial<
 // ?
 //
 export type TransformationStageInput = {
-  chunks: Array<Chunk>, handlers: Array<Handler>
+  chunks: Array<Chunk>, handlers?: Array<Handler>
 };
 
 //
