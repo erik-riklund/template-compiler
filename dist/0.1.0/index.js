@@ -1,3 +1,11 @@
+//
+// Copyright 2025 Erik Riklund (Gopher)
+// <https://github.com/erik-riklund>
+//
+// @version 0.1.0
+// @license MIT
+//
+
 /**
  * @typedef {import('./types').CompilePipelineInput} CompilePipelineInput
  * @typedef {import('./types').RenderingFunction} RenderingFunction
@@ -246,18 +254,18 @@ var outputToFunction = async (body) => {
 
 // index.ts
 /**
- * ?
+ * The entrypoint to the template compilation pipeline.
  */
 var compileTemplate = {
   /**
-   * ?
+   * Compiles a template to a stringified render function.
    * 
    * @type {(input: CompilePipelineInput)=>Promise<StringifiedRenderingFunction>}
    */
   toString: createPipeline([parse, transform, assemble, outputToString]),
 
   /**
-   * ?
+   * Compiles a template to an executable render function.
    * 
    * @type {(input: CompilePipelineInput)=>Promise<RenderingFunction>}
    */
