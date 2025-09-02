@@ -1,4 +1,4 @@
-# @zenplate/compiler - version 0.1.0
+# @zenplate/compiler - version 0.1.2
 
 ⚠️ Currently in an alpha stage. It will be used by the upcoming **Zenplate** template engine.
 
@@ -65,11 +65,11 @@ For both of these methods, the returned function has the signature `(context) =>
 Transforming a template to an executable render function:
 
 ```js
-import { transformTemplate } from 'zenplate-compiler'
+import { compileTemplate } from 'zenplate-compiler'
 
 // We assume that the template is stored in a variable called `template`.
 
-const renderFunction = await transformTemplate.toFunction({ template });
+const renderFunction = await compileTemplate.toFunction({ template });
 ```
 
 ---
@@ -77,11 +77,11 @@ const renderFunction = await transformTemplate.toFunction({ template });
 Transforming a template to a stringified render function that can be cached and imported at runtime:
 
 ```js
-import { transformTemplate } from 'zenplate-compiler'
+import { compileTemplate } from 'zenplate-compiler'
 
 // We assume that the template is stored in a variable called `template`.
 
-const renderFunction = await transformTemplate.toString({ template });
+const renderFunction = await compileTemplate.toString({ template });
 ```
 
 ---

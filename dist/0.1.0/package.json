@@ -4,7 +4,7 @@
   "main": "./index.js",
   "types": "./types.d.ts",
   "license": "MIT",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "name": "zenplate-compiler",
   "author": "Erik Riklund (Gopher)",
   "description": "A minimal compiler for logic-free templates.",
