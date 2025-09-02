@@ -16,34 +16,35 @@ It was built primarily for a static site generator project, but it can also be u
 
 ## A simple example
 
-- **Using the default syntax in a HTML template:**
+Using the default syntax in a HTML template:
 
-  ```html
-  <html>
-    <head>
-      <title>{$title}</title>
-    </head>
+```html
+<html>
+  <head>
+    <title>{$title}</title>
+  </head>
 
-    <body>
-      <h1>{$user.name}</h1>
-      <p>{$user.profile!}</p>
+  <body>
+    <h1>{$user.name}</h1>
+    <p>{$user.profile!}</p>
 
-      #with $user.jobs:
-      <ul>
-        #each company, started in $user.jobs:
-        <li>{$company} ({$started})</li>
-        end
-      </ul>
-      else:
-      <p>There are no jobs associated with this user.</p>
+    #with $user.jobs:
+    <ul>
+      #each company, started in $user.jobs:
+      <li>{$company} ({$started})</li>
       end
+    </ul>
+    else:
+    <p>There are no jobs associated with this user.</p>
+    end
 
-      #when $user.isAdmin:
-      <p>This user have an administrative role.</p>
-      end
-    </body>
-  </html>
-  ```
+    #when $user.isAdmin:
+    <p>This user have an administrative role.</p>
+    end
+  </body>
+</html>
+```
+
 > The `!` means that the value of a variable should not be sanitized.
 
 ---
@@ -61,25 +62,27 @@ For both of these methods, the returned function has the signature `(context) =>
 
 ---
 
-- **Transforming a template to an executable render function:**
+Transforming a template to an executable render function:
 
-  ```js
-  import { transformTemplate } from '@zenplate/compiler'
+```js
+import { transformTemplate } from '@zenplate/compiler'
 
-  // We assume that the template is stored in a variable called `template`.
+// We assume that the template is stored in a variable called `template`.
 
-  const renderFunction = await transformTemplate.toFunction({ template });
-  ```
+const renderFunction = await transformTemplate.toFunction({ template });
+```
 
-- **Transforming a template to a stringified render function that can be cached and imported at runtime:**
+---
 
-  ```js
-  import { transformTemplate } from '@zenplate/compiler'
+Transforming a template to a stringified render function that can be cached and imported at runtime:
 
-  // We assume that the template is stored in a variable called `template`.
+```js
+import { transformTemplate } from '@zenplate/compiler'
 
-  const renderFunction = await transformTemplate.toString({ template });
-  ```
+// We assume that the template is stored in a variable called `template`.
+
+const renderFunction = await transformTemplate.toString({ template });
+```
 
 ---
 
