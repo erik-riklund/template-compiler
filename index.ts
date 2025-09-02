@@ -2,10 +2,15 @@
 // Copyright 2025 Erik Riklund (Gopher)
 // <https://github.com/erik-riklund>
 //
-// @version 1.0.0
+// @version 0.1.0
 //
 
-import type { PipelineInput, Renderer } from 'types'
+import type {
+  CompilePipelineInput,
+  RenderingFunction,
+  StringifiedRenderingFunction
+} from 'types'
+
 import { createPipeline } from 'composable-pipeline'
 
 //
@@ -23,12 +28,18 @@ import { outputToFunction } from 'core/output/function'
 // - `toString` creates a stringified render function
 // - `toFunction` creates an executable render function
 //
-export const transformTemplate =
+export const compileTemplate =
 {
-  toString: createPipeline<PipelineInput, string>(
+  toString: createPipeline<CompilePipelineInput, StringifiedRenderingFunction>(
     [parse, transform, assemble, outputToString]
   ),
-  toFunction: createPipeline<PipelineInput, Renderer>(
+  toFunction: createPipeline<CompilePipelineInput, RenderingFunction>(
     [parse, transform, assemble, outputToFunction]
   )
 }
+
+//
+// Exports the default handlers. These are automatically included,
+// but it's required for adding custom handlers to the pipeline.
+//
+export { getDefaultHandlers } from 'handlers'

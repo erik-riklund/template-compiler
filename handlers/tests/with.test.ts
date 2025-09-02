@@ -5,7 +5,7 @@
 
 import type { Chunk } from 'types'
 import { it, expect } from 'bun:test'
-import { handler } from 'handlers/blocks/with'
+import { withBlockHandler } from 'handlers/blocks/with'
 
 // ---
 
@@ -14,7 +14,7 @@ it('should transform a `with` block with a variable',
   async () =>
   {
     const chunk: Chunk = { type: 'block', content: '#with $user:' };
-    const [, result] = await handler.transform(0, chunk);
+    const [, result] = await withBlockHandler.transform(0, chunk);
 
     expect(result).toInclude("if ((typeof user !== 'undefined' ? user : data.user).length > 0) {");
   }
@@ -27,7 +27,7 @@ it('should transform a `without` block with a variable',
   async () =>
   {
     const chunk: Chunk = { type: 'block', content: '#without $user:' };
-    const [, result] = await handler.transform(0, chunk);
+    const [, result] = await withBlockHandler.transform(0, chunk);
 
     expect(result).toInclude("if ((typeof user !== 'undefined' ? user : data.user).length === 0) {");
   }
@@ -40,7 +40,7 @@ it('should transform a `with` block with a nested variable',
   async () =>
   {
     const chunk: Chunk = { type: 'block', content: '#with $user.jobs:' };
-    const [, result] = await handler.transform(0, chunk);
+    const [, result] = await withBlockHandler.transform(0, chunk);
 
     expect(result).toInclude("if ((typeof user !== 'undefined' ? user?.jobs : data.user?.jobs).length > 0) {");
   }
@@ -53,7 +53,7 @@ it('should transform a `without` block with a nested variable',
   async () =>
   {
     const chunk: Chunk = { type: 'block', content: '#without $user.name:' };
-    const [, result] = await handler.transform(0, chunk);
+    const [, result] = await withBlockHandler.transform(0, chunk);
 
     expect(result).toInclude("if ((typeof user !== 'undefined' ? user?.name : data.user?.name).length === 0) {");
   }

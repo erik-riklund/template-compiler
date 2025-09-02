@@ -1,10 +1,11 @@
 {
   "type": "module",
+  "exports": { ".": "./index.js" },
+  "types": "./index.d.ts",
   "license": "MIT",
   "version": "0.1.0",
   "name": "@zenplate/compiler",
   "description": "...",
   "keywords": [ "zenplate", "template", "compiler" ],
-  "homepage": "https://github.com/erik-riklund/template-platform",
-  "exports": { ".": "./index.js", "./handlers": "./handlers/index.js" }
+  "homepage": "https://github.com/erik-riklund/template-compiler"
 }

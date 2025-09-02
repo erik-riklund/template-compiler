@@ -3,25 +3,21 @@
 // <https://github.com/erik-riklund>
 //
 
-import type { Handler } from 'types'
+import type { TransformationHandler } from 'types'
 
-import { handler as blockEnd } from './blocks/end'
-import { handler as elseBlock } from './blocks/else'
-import { handler as eachBlock } from './blocks/each'
-import { handler as withBlock } from './blocks/with'
-import { handler as whenBlock } from './blocks/when'
-import { handler as variable } from './variables'
+import { blockEndHandler } from './blocks/end'
+import { elseBlockHandler } from './blocks/else'
+import { eachBlockHandler } from './blocks/each'
+import { withBlockHandler } from './blocks/with'
+import { whenBlockHandler } from './blocks/when'
+import { variableHandler } from './variables'
 
 // ---
 
-export const getHandlers = (): Array<Handler> =>
+export const getDefaultHandlers = (): Array<TransformationHandler> =>
 {
   return [
-    blockEnd,
-    elseBlock,
-    eachBlock,
-    withBlock,
-    whenBlock,
-    variable
+    blockEndHandler, elseBlockHandler, eachBlockHandler,
+    withBlockHandler, whenBlockHandler, variableHandler
   ];
 }

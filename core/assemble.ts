@@ -15,8 +15,8 @@ const { data, sanitize } =
   data: {},
   
   sanitize: (input) => {
-    return typeof input !== 'string' ? input
-      : input.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    return typeof input !== 'string' ? String(input)
+      : input.replaceAll('<', '&lt;').replaceAll('>', '&gt;');
   },
   
   ...context

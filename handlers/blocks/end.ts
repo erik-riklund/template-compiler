@@ -3,11 +3,11 @@
 // <https://github.com/erik-riklund>
 //
 
-import type { Handler } from 'types'
+import type { TransformationHandler } from 'types'
 
 // ---
 
-export const handler: Handler =
+export const blockEndHandler: TransformationHandler =
 {
   test: (chunk) =>
   {

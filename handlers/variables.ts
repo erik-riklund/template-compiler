@@ -3,8 +3,8 @@
 // <https://github.com/erik-riklund>
 //
 
-import type { Handler } from 'types'
 import { formatString } from 'format-string'
+import type { TransformationHandler } from 'types'
 
 // ---
 
@@ -18,7 +18,7 @@ export const getVariablePaths = (path: string) =>
 
 // ---
 
-export const handler: Handler =
+export const variableHandler: TransformationHandler =
 {
   test: (chunk) => chunk.type === 'variable',
 

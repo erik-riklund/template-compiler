@@ -3,13 +3,13 @@
 // <https://github.com/erik-riklund>
 //
 
-import type { Handler } from 'types'
+import type { TransformationHandler } from 'types'
 import { formatString } from 'format-string'
 import { getVariablePaths } from 'handlers/variables'
 
 // ---
 
-export const handler: Handler =
+export const whenBlockHandler: TransformationHandler =
 {
   test: ({ type, content }) =>
   {

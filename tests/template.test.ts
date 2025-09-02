@@ -4,8 +4,8 @@
 //
 
 import { it, expect } from 'bun:test'
-import { transformTemplate } from '..'
-import { getHandlers } from 'handlers'
+import { compileTemplate } from '..'
+import { getDefaultHandlers } from 'handlers'
 
 // ---
 
@@ -41,8 +41,8 @@ it('should render a template with every possible block type',
 
   async () =>
   {
-    const render = await transformTemplate
-      .toFunction({ template, handlers: getHandlers() });
+    const render = await compileTemplate
+      .toFunction({ template, handlers: getDefaultHandlers() });
 
     const data =
     {

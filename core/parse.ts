@@ -4,13 +4,13 @@
 //
 
 import type { Stage } from 'composable-pipeline/types'
-import type { Chunk, PipelineInput, ParseRules, TransformationStageInput } from 'types'
+import type { Chunk, CompilePipelineInput, BlockParsingRules, TransformationStageInput } from 'types'
 
 //
 // ?
 //
 export const parse: Stage<
-  PipelineInput, TransformationStageInput
+  CompilePipelineInput, TransformationStageInput
 > = async ({ template, handlers, rules }) =>
   {
     const chunks: Array<Chunk> = [];
@@ -43,9 +43,9 @@ export const parse: Stage<
 //
 // ?
 //
-const applyDefaultRules = (rules: Partial<ParseRules>) =>
+const applyDefaultRules = (rules: Partial<BlockParsingRules>) =>
 {
-  const defaultRules: ParseRules =
+  const defaultRules: BlockParsingRules =
   {
     block: (line: string) => 
     {
@@ -76,7 +76,7 @@ const applyDefaultRules = (rules: Partial<ParseRules>) =>
 // ?
 //
 const parseLine = (chunks: Array<Chunk>, line: string,
-  { variable, variableEnd }: Pick<ParseRules, 'variable' | 'variableEnd'>) =>
+  { variable, variableEnd }: Pick<BlockParsingRules, 'variable' | 'variableEnd'>) =>
 {
   let buffer = '';
 

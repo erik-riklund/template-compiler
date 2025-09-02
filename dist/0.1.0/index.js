@@ -1,3 +1,9 @@
+/**
+ * @typedef {import('./types').CompilePipelineInput} CompilePipelineInput
+ * @typedef {import('./types').RenderingFunction} RenderingFunction
+ * @typedef {import('./types').StringifiedRenderingFunction} StringifiedRenderingFunction
+ */
+
 // dependencies/composable-pipeline/index.ts
 var createPipeline = (stages) => {
   return async (input) => {
@@ -65,7 +71,7 @@ var parseLine = (chunks, line, { variable, variableEnd }) => {
 };
 
 // handlers/blocks/end.ts
-var handler = {
+var blockEndHandler = {
   test: (chunk) => {
     return chunk.type === "block" && chunk.content === "end";
   },
@@ -73,7 +79,7 @@ var handler = {
 };
 
 // handlers/blocks/else.ts
-var handler2 = {
+var elseBlockHandler = {
   test: (chunk) => {
     return chunk.type === "block" && chunk.content === "else:";
   },
@@ -91,7 +97,7 @@ var getVariablePaths = (path) => {
   const topLevelVariable = path.split(".")[0];
   return { safePath, topLevelVariable };
 };
-var handler3 = {
+var variableHandler = {
   test: (chunk) => chunk.type === "variable",
   transform: async (index, { content }) => {
     return [
@@ -107,7 +113,7 @@ var handler3 = {
 };
 
 // handlers/blocks/each.ts
-var handler4 = {
+var eachBlockHandler = {
   test: ({ type, content }) => {
     return type === "block" && content.startsWith("#each ");
   },
@@ -127,7 +133,7 @@ for (const %1 of (%2)) {`, [variable.includes(",") ? `{ ${variable} }` : variabl
 };
 
 // handlers/blocks/with.ts
-var handler5 = {
+var withBlockHandler = {
   test: ({ type, content }) => {
     return type === "block" && (content.startsWith("#with ") || content.startsWith("#without "));
   },
@@ -147,7 +153,7 @@ if ((%1).length %2 0) {`, [value, block === "with" ? ">" : "===", safePath, vari
 };
 
 // handlers/blocks/when.ts
-var handler6 = {
+var whenBlockHandler = {
   test: ({ type, content }) => {
     return type === "block" && content.startsWith("#when ");
   },
@@ -167,14 +173,20 @@ if (%1 === %3) {`, [value, variable, modifier === "not" ? "false" : "true", Stri
 };
 
 // handlers/index.ts
-var getHandlers = () => {
+/**
+ * Returns an array containing the default transformation handlers.  
+ * These are applied automatically by the compiler if no custom handlers are provided.
+ * 
+ * @returns {Array<import('./types').TransformationHandler>}
+ */
+var getDefaultHandlers = () => {
   return [
-    handler,
-    handler2,
-    handler4,
-    handler5,
-    handler6,
-    handler3
+    blockEndHandler,
+    elseBlockHandler,
+    eachBlockHandler,
+    withBlockHandler,
+    whenBlockHandler,
+    variableHandler
   ];
 };
 
@@ -182,14 +194,14 @@ var getHandlers = () => {
 var transform = async ({ chunks, handlers }) => {
   const result = [];
   const processedChunks = [];
-  handlers ??= getHandlers();
+  handlers ??= getDefaultHandlers();
   for (let index = 0;index < chunks.length; index++) {
     const chunk = chunks[index];
-    let handler7 = null;
+    let handler = null;
     if (chunk.type !== "text") {
-      handler7 = handlers.find((h) => h.test(chunk)) ?? null;
+      handler = handlers.find((h) => h.test(chunk)) ?? null;
     }
-    processedChunks.push(handler7 ? handler7.transform(index, chunk) : Promise.resolve([index, "output.push(`" + chunk.content + "`);"]));
+    processedChunks.push(handler ? handler.transform(index, chunk) : Promise.resolve([index, "output.push(`" + chunk.content + "`);"]));
   }
   const transformedChunks = await Promise.all(processedChunks);
   for (const [index, content] of transformedChunks) {
@@ -205,8 +217,8 @@ const { data, sanitize } =
   data: {},
   
   sanitize: (input) => {
-    return typeof input !== 'string' ? input
-      : input.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    return typeof input !== 'string' ? String(input)
+      : input.replaceAll('<', '&lt;').replaceAll('>', '&gt;');
   },
   
   ...context
@@ -233,10 +245,25 @@ var outputToFunction = async (body) => {
 };
 
 // index.ts
-var transformTemplate = {
+/**
+ * ?
+ */
+var compileTemplate = {
+  /**
+   * ?
+   * 
+   * @type {(input: CompilePipelineInput)=>Promise<StringifiedRenderingFunction>}
+   */
   toString: createPipeline([parse, transform, assemble, outputToString]),
+
+  /**
+   * ?
+   * 
+   * @type {(input: CompilePipelineInput)=>Promise<RenderingFunction>}
+   */
   toFunction: createPipeline([parse, transform, assemble, outputToFunction])
 };
 export {
-  transformTemplate
+  getDefaultHandlers,
+  compileTemplate
 };
