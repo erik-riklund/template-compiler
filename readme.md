@@ -108,6 +108,10 @@ const renderFunction = await transformTemplate.toString({ template });
 
   - `$variableName` or `$variableName.property`
 
+> Missing variables are output as the string `undefined`.
+
+---
+
 ### Blocks
 
 Block declarations—both openers and closers—must be on a line by themselves.
