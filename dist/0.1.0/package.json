@@ -1,11 +1,13 @@
 {
   "type": "module",
-  "exports": { ".": "./index.js" },
-  "types": "./index.d.ts",
+  "main": "./index.js",
+  "types": "./types.d.ts",
   "license": "MIT",
   "version": "0.1.0",
   "name": "@zenplate/compiler",
-  "description": "...",
+  "author": "Erik Riklund (Gopher)",
+  "description": "A minimal compiler for logic-free templates.",
   "keywords": [ "zenplate", "template", "compiler" ],
-  "homepage": "https://github.com/erik-riklund/template-compiler"
+  "homepage": "https://github.com/erik-riklund/template-compiler#readme",
+  "bugs": "https://github.com/erik-riklund/template-compiler/issues"
 }
