@@ -1,4 +1,8 @@
-## @zenplate/compiler
+# @zenplate/compiler
+
+⚠️ Currently in an alpha stage. It will be used by the upcoming **Zenplate** template engine.
+
+---
 
 _There should be no business logic or expressions in templates, only structure._
 
@@ -10,7 +14,7 @@ It was built primarily for a static site generator project, but it can also be u
 
 ---
 
-### A simple example
+## A simple example
 
 - **Using the default syntax in a HTML template:**
 
@@ -19,6 +23,7 @@ It was built primarily for a static site generator project, but it can also be u
     <head>
       <title>{$title}</title>
     </head>
+
     <body>
       <h1>{$user.name}</h1>
       <p>{$user.profile!}</p>
@@ -32,6 +37,10 @@ It was built primarily for a static site generator project, but it can also be u
       else:
       <p>There are no jobs associated with this user.</p>
       end
+
+      #when $user.isAdmin:
+      <p>This user have an administrative role.</p>
+      end
     </body>
   </html>
   ```
@@ -39,7 +48,7 @@ It was built primarily for a static site generator project, but it can also be u
 
 ---
 
-### Using the compiler
+## Using the compiler
 
 The compiler exposes an API with two methods: `toFunction` and `toString`.
 
@@ -74,14 +83,96 @@ For both of these methods, the returned function has the signature `(context) =>
 
 ---
 
-### ?
+## Quick syntax reference
 
-⚠️ *This section assumes that you are using the default syntax.*
+*This section assumes that you are using the default syntax.*
 
-#### Variables
+### Variables
 
-...
+- **Interpolated variables:**
 
-#### Blocks
+  Inline rendering of variable values is supported using the `{` and `}` delimiters.
 
-...
+  - `{$variableName}` or `{$variableName.property}`
+
+  The `!` modifier can be used to prevent the value from being sanitized.
+
+  - `{$variableName!}` or `{$variableName.property!}`
+
+- **Variables used in block openers:**
+
+  The variables used in block openers does not need the `{` and `}` delimiters.
+
+  - `$variableName` or `$variableName.property`
+
+### Blocks
+
+Block declarations—both openers and closers—must be on a line by themselves.
+
+`when` and `with` blocks can use `else:` to render fallback content if the condition is not met.
+
+---
+
+- `#when` and `#when not`:
+
+  These blocks are used to conditionally render content based on whether a variable is `true` or `false`.
+
+  ```
+  #when $someBooleanVariable:
+    The value of $someBooleanVariable is true.
+  else:
+    The value of $someBooleanVariable is false.
+  end
+  ```
+
+  ```
+  #when not $someBooleanVariable:
+    The value of $someBooleanVariable is false.
+  end
+  ```
+
+  > Throws an error during rendering if the variable is not a boolean value.
+
+---
+
+- `#with` and `#without`:
+
+  These blocks are used in conjunction with `#each` to determine if an array has content.
+
+  ```
+  #with $someArrayVariable:
+    The array $someArrayVariable has one or more items.
+  else:
+    The array $someArrayVariable is empty.
+  end
+  ```
+
+  ```
+  #without $someArrayVariable:
+    The array $someArrayVariable is empty.
+  end
+  ```
+
+  > Throws an error during rendering if the variable is not an array.
+
+---
+
+- `#each`:
+
+  Used to iterate over an array and render content for each iteration.
+
+  ```
+  #each job in $jobs:
+    Render content using the local variable `$job`.
+  end
+  ```
+
+  Destructuring is supported, allowing you to break each item into multiple variables.
+
+  ```
+  #each company, started in $jobs:
+    Render content using the local variables `$company` and `$started`.
+  end
+  ```
+
+  > Throws an error during rendering if the variable is not an array.
