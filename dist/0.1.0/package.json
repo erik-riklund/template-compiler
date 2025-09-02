@@ -5,7 +5,7 @@
   "types": "./types.d.ts",
   "license": "MIT",
   "version": "0.1.0",
-  "name": "@zenplate/compiler",
+  "name": "zenplate-compiler",
   "author": "Erik Riklund (Gopher)",
   "description": "A minimal compiler for logic-free templates.",
   "keywords": [ "zenplate", "template", "compiler" ],
